@@ -3,34 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <title>웹페이지 요약</title>
-  <style>
-    /* 팝업 전체 스타일 */
-    body {
-      width: 300px;
-      font-family: Arial, sans-serif;
-    }
-
-    /* 결과 및 메시지 영역 스타일 */
-    #result, #sentiment, #progressMessage, #historyList {
-      margin-top: 10px;
-      font-size: 13px;
-    }
-
-    /* 요약 길이 선택 드롭다운 스타일 */
-    select {
-      width: 100%;
-      margin-bottom: 10px;
-    }
-
-    /* 버튼 스타일 */
-    button {
-      margin-right: 5px;
-    }
-  </style>
+  <link rel="stylesheet" href="popup.css">
 </head>
-<body>
+<body class="light"> <!-- 기본은 light 테마 -->
   <!-- 팝업 제목 -->
   <h3>웹페이지 요약</h3>
+
+  <!-- 테마 토글 버튼 -->
+  <button id="themeToggleButton">🌙 다크 모드</button>
 
   <!-- 요약 길이 선택 메뉴 -->
   <label for="summaryLength">요약 길이 선택:</label>
@@ -47,8 +27,15 @@
   <!-- 메시지 및 결과 출력 영역 -->
   <div id="progressMessage"></div>
   <div id="result"></div>
+  <button id="copyButton" style="display: none;">📋 복사하기</button>
   <div id="sentiment"></div>
   <div id="historyList"></div>
+
+  <!-- 사용 통계 영역 -->
+  <div id="stats">
+    총 사용 횟수: <span id="usageCount">0</span><br>
+    자주 사용하는 사이트: <div id="topSites"></div>
+  </div>
 
   <!-- 팝업 기능 스크립트 연결 -->
   <script src="popup_fixed.js"></script>

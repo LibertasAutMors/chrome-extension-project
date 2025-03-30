@@ -42,7 +42,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         "Authorization": "Bearer apikey"
       },
       body: JSON.stringify({
-        model: "gpt-4",
+        model: "gpt-4", 
         max_tokens: maxTokens,
         messages: [
           {
