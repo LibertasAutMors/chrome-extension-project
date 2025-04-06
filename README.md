@@ -6,14 +6,7 @@
 
 ## 🖼️ 아이콘 미리보기
 
-### 🔹 16x16 아이콘
-![icon16](./icons/icon16.png)
-
-### 🔹 48x48 아이콘
 ![icon48](./icons/icon48.png)
-
-### 🔹 128x128 아이콘
-![icon128](./icons/icon128.png)
 
 ---
 
