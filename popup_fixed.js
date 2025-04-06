@@ -182,11 +182,11 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
     if (sentimentBar && message.sentimentStats) {
       sentimentBar.innerHTML = `
-        <div class="positive-bar" style="width:${message.sentimentStats.positive}%">긍정: ${message.sentimentStats.positive}%</div>
-        <div class="neutral-bar" style="width:${message.sentimentStats.neutral}%">중립: ${message.sentimentStats.neutral}%</div>
-        <div class="negative-bar" style="width:${message.sentimentStats.negative}%">부정: ${message.sentimentStats.negative}%</div>
+        <div class="positive-bar" style="width:${message.sentimentStats.positive}%">${message.sentimentStats.positive}%</div>
+        <div class="neutral-bar" style="width:${message.sentimentStats.neutral}%">${message.sentimentStats.neutral}%</div>
+        <div class="negative-bar" style="width:${message.sentimentStats.negative}%">${message.sentimentStats.negative}%</div>
       `;
-    }
+    }    
 
     if (copyButton) copyButton.style.display = "inline-block";
     if (closeButton) closeButton.style.display = "inline-block";
