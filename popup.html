@@ -1,43 +1,56 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>웹페이지 요약</title>
-  <link rel="stylesheet" href="popup.css">
+  <link rel="stylesheet" href="popup.css" />
 </head>
-<body class="light"> <!-- 기본은 light 테마 -->
-  <!-- 팝업 제목 -->
-  <h3>웹페이지 요약</h3>
-
-  <!-- 테마 토글 버튼 -->
-  <button id="themeToggleButton">🌙 다크 모드</button>
-
-  <!-- 요약 길이 선택 메뉴 -->
-  <label for="summaryLength">요약 길이 선택:</label>
-  <select id="summaryLength">
-    <option value="100">짧게</option>
-    <option value="300" selected>보통</option>
-    <option value="500">길게</option>
-  </select>
-
-  <!-- 요약 실행 버튼 및 히스토리 보기 버튼 -->
-  <button id="summarizeButton">요약 실행</button>
-  <button id="viewHistoryButton">최근 요약 보기</button>
-
-  <!-- 메시지 및 결과 출력 영역 -->
-  <div id="progressMessage"></div>
-  <div id="result"></div>
-  <button id="copyButton" style="display: none;">📋 복사하기</button>
-  <div id="sentiment"></div>
-  <div id="historyList"></div>
-
-  <!-- 사용 통계 영역 -->
-  <div id="stats">
-    총 사용 횟수: <span id="usageCount">0</span><br>
-    자주 사용하는 사이트: <div id="topSites"></div>
+<body class="light">
+  <div class="theme-toggle">
+    <button id="themeToggleButton">🌙</button>
   </div>
 
-  <!-- 팝업 기능 스크립트 연결 -->
+  <h3 class="title">웹페이지 요약</h3>
+
+  <div class="tab-container">
+    <button class="tab-button active" data-tab="summaryTab">🧠 요약</button>
+    <button class="tab-button" data-tab="statsTab">📊 통계</button>
+  </div>
+
+  <div class="tab-content" id="summaryTab">
+    <label for="summaryLength">요약 길이 선택:</label>
+    <select id="summaryLength">
+      <option value="100">짧게</option>
+      <option value="300" selected>보통</option>
+      <option value="500">길게</option>
+    </select>
+
+    <button id="summarizeButton">요약 실행</button>
+    <button id="viewHistoryButton">최근 요약 보기</button>
+
+    <div id="progressMessage"></div>
+
+    <div id="result" class="result-box"></div>
+
+    <button id="copyButton" style="display:none;">📋 복사하기</button>
+
+    <div id="sentimentResult" class="sentiment-text"></div>
+
+    <div id="sentimentBarContainer">
+      <div id="sentimentBar" style="margin-top: 10px;"></div>
+    </div>
+
+    <button id="closeSummary" style="display:none;">닫기</button>
+    <div id="historyList"></div>
+  </div>
+
+  <div class="tab-content hidden" id="statsTab">
+    <h4>총 사용 횟수</h4>
+    <p><span id="usageCount">0</span>회</p>
+    <h4>자주 사용하는 사이트</h4>
+    <div id="topSites"></div>
+  </div>
+
   <script src="popup_fixed.js"></script>
 </body>
 </html>
