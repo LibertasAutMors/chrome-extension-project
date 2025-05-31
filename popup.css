@@ -234,3 +234,14 @@ body.dark #closeSummary {
 body.dark #topSites div {
   color: #ccc;
 }
+
+/* 감정버튼 */ 
+#saveEmotion {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
