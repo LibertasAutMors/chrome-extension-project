@@ -192,3 +192,110 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (closeButton) closeButton.style.display = "inline-block";
   }
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+  const saveBtn = document.getElementById("saveEmotion");
+  const historyList = document.getElementById("emotionHistoryList");
+
+  // 저장 버튼 클릭 이벤트
+  if (saveBtn) {
+    saveBtn.addEventListener("click", () => {
+      const emotionData = document.getElementById("result").textContent;
+      const timestamp = new Date().toISOString();
+      const savedData = JSON.parse(localStorage.getItem("emotionHistory") || "[]");
+      savedData.push({ emotion: emotionData, time: timestamp });
+      localStorage.setItem("emotionHistory", JSON.stringify(savedData));
+      alert("감정 분석 결과가 저장되었습니다.");
+      renderEmotionHistory();  // 저장 후 목록 갱신
+    });
+  }
+
+  // 감정 히스토리 렌더링
+  function renderEmotionHistory() {
+    const savedData = JSON.parse(localStorage.getItem("emotionHistory") || "[]");
+    historyList.innerHTML = "";
+
+    if (savedData.length === 0) {
+      historyList.innerHTML = "<li>저장된 감정 분석 결과가 없습니다.</li>";
+      return;
+    }
+
+    // 최근 5개 항목만 표시 (최신순)
+    savedData
+      .slice(-5)
+      .reverse()
+      .forEach((item, i) => {
+        const li = document.createElement("li");
+        li.innerHTML = `
+          ${new Date(item.time).toLocaleString()} - ${item.emotion}
+          <button data-index="${savedData.length - 1 - i}" class="delete-button">🗑️</button>
+        `;
+        historyList.appendChild(li);
+      });
+
+    // 개별 삭제 버튼 이벤트 연결
+    const deleteButtons = document.querySelectorAll(".delete-button");
+    deleteButtons.forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        const index = parseInt(e.target.dataset.index);
+        savedData.splice(index, 1);
+        localStorage.setItem("emotionHistory", JSON.stringify(savedData));
+        renderEmotionHistory();
+      });
+    });
+  }
+
+  // 페이지 로드 시 히스토리 렌더링
+  renderEmotionHistory();
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const translations = {
+    ko: {
+      save: "감정 저장",
+      history: "감정 분석 히스토리",
+      noData: "저장된 감정 분석 결과가 없습니다.",
+    },
+    en: {
+      save: "Save Emotion",
+      history: "Emotion History",
+      noData: "No saved emotion data.",
+    },
+    ja: {
+      save: "感情を保存する",
+      history: "感情分析の履歴",
+      noData: "保存された感情分析データはありません。",
+    },
+  };
+
+  const saveBtn = document.getElementById("saveEmotion");
+  const historyTitle = document.getElementById("historyTitle");
+  const historyList = document.getElementById("emotionHistoryList");
+  const langSelect = document.getElementById("languageSelect");
+  console.log("languageSelect:", langSelect); 
+  function applyTranslation(lang) {
+    const t = translations[lang] || translations.en;
+
+    if (saveBtn) saveBtn.textContent = t.save;
+    if (historyTitle) historyTitle.textContent = t.history;
+
+    // 리스트가 비어 있으면 안내 문구 갱신
+    if (historyList && historyList.children.length === 0) {
+      historyList.innerHTML = `<li>${t.noData}</li>`;
+    }
+  }
+
+  // 초기 언어 감지 및 적용
+  const browserLang = navigator.language.slice(0, 2);
+  const initialLang = translations[browserLang] ? browserLang : "en";
+  langSelect.value = initialLang;
+  applyTranslation(initialLang);
+
+  // 언어 변경 이벤트
+  langSelect.addEventListener("change", (e) => {
+    const selectedLang = e.target.value;
+    applyTranslation(selectedLang);
+  });
+});
+
+
